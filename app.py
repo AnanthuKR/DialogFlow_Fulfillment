@@ -12,19 +12,21 @@ app.debug = True
 def hello():
     return '{"Hello": "AIDI!"}'
 
-@app.route('/webhook', methods= ['GET', 'POST'])
-def index():
+@app.route('/webhook', methods=['POST'])
+def webhook():
     body = request.json
-    name = body['queryResult']['parameters']['person']
-    api_url = (f'https://api.genderize.io?name={name}')
-    headers = {'Content-Type': 'text/json'}
-    response = requests.get(api_url, headers= headers)
-    final = response.json()
+    name1 = body['queryResult']['parameters']['name']
+    return name1
+    
+    # api_url = 'https://api.genderize.io?name='+ name1
+    # headers = {'Content-Type': 'application/json'}
+    # response = requests.get(api_url, headers= headers)
+    # final = response.json()
 
-    name_given = str(final['name'])
-    gender_pred = str(final['gender'])
-    prob_pred = str(int(final['probability']))
+    # name_given = str(final['name'])
+    # gender_pred = str(final['gender'])
+    # prob_pred = str(int(final['probability']))
 
-    reply = '{ "fulfillmentMessages": [ { "text": { "text": [ "The gender of '+ name_given +", "+ ' is ' + gender_pred + '" ] } } ] }'
+    # reply = '{ "fulfillmentMessages": [ { "text": { "text": [ "The gender of '+ name_given +", "+ ' is ' + gender_pred + '" ] } } ] }'
 
-    return reply
+    # return reply
